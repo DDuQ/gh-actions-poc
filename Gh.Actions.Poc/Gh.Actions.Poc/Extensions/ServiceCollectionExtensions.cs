@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Gh.Actions.Poc.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Pet.Project.Auth0.Authorization;
 using System.Security.Claims;
 
-namespace Pet.Project.Auth0.Extensions
+namespace Gh.Actions.Poc.Extensions
 {
     public static class ServiceCollectionExtensions
     {

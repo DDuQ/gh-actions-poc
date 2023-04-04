@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace Pet.Project.Auth0.Authorization
+namespace Gh.Actions.Poc.Authorization
 {
     public class HasScopeRequirement : IAuthorizationRequirement
     {
