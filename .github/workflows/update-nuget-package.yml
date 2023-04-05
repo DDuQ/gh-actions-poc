@@ -16,7 +16,7 @@ jobs:
           dotnet-version: '6.0.x'
           
       - name: Restore NuGet packages
-        run: dotnet restore ./Gh.Actions.Poc.csproj
+        run: dotnet restore ./Gh.Actions.Poc
       - name: Build and pack NuGet package
         run: |
           dotnet build --configuration Release
