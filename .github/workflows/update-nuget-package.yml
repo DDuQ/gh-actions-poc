@@ -24,5 +24,5 @@ jobs:
           dotnet pack ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release --output ./nupkg -p:PackageVersion=2.1.0
 
       - name: Publish NuGet package
-        run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./Gh.Actions.Poc/*.nupkg --skip-duplicate --no-symbols true
 
