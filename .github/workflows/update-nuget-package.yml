@@ -19,7 +19,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --output ../
       - name: Pack NuGet package
-        run: dotnet pack --configuration Release --output ./nupkg/
+        run: dotnet pack --configuration Release --output ./nupkg/ -v:d
       - name: Push NuGet package
         uses: nuget/push@v1
         with:
