@@ -19,8 +19,8 @@ jobs:
         run: dotnet restore ./Gh.Actions.Poc/Gh.Actions.Poc.sln
       - name: Build and pack NuGet package
         run: |
-          dotnet build --configuration Release
-          dotnet pack --configuration Release --output ./nupkg
+          dotnet build ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release 
+          dotnet pack ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release --output ./nupkg
 
       - name: Publish NuGet package
         run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
