@@ -18,9 +18,7 @@ jobs:
       run: dotnet restore ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc.csproj
     - name: Build
       run: dotnet build ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc.csproj --configuration Release --no-restore
-    - name: Publish Gh.Actions.Poc
-      uses: brandedoutcast/publish-nuget@v2.5.0
-      with:
-          PROJECT_FILE_PATH: ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc.csproj
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}} 
-
+    - name: Pack
+      run: dotnet pack ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc.csproj -c Release
+    - name: Publish to GitHub packages 
+      run: dotnet nuget push /home/runner/work/Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate``
