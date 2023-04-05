@@ -21,4 +21,4 @@ jobs:
     - name: Pack
       run: dotnet pack ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc.csproj -c Release
     - name: Publish to GitHub packages 
-      run: dotnet nuget push ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate``
+      run: dotnet nuget push ./Gh.Actions.Poc/Gh.Actions.Poc/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate``
