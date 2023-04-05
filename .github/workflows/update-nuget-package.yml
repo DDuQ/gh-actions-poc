@@ -20,7 +20,7 @@ jobs:
       - name: Build and pack NuGet package
         run: |
           dotnet build ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release 
-          dotnet pack ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release --output ./nupkg
+          dotnet pack ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release --output ./nupkg /p:PackageVersion=${{ env.CURRENT_NUGET_VERSION }} /p:Version=${{ env.CURRENT_NUGET_VERSION }}
 
       - name: Publish NuGet package
         run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
