@@ -28,7 +28,7 @@ jobs:
         uses: nuget/push@v1
         with:
           nuget-api-key: ${{ secrets.NUGET_API_KEY }}
-          nuget-version: ${{ env.NUGET_VERSION }}
-          nuget-package: './nupkg/Gh.Actions.Poc.${{ env.CURRENT_NUGET_VERSION }}.nupkg'
+          nuget-version: 1.0.0
+          nuget-package: './nupkg/Gh.Actions.Poc.1.0.0.nupkg'
           nuget-destination: 'https://www.nuget.org/api/v2/package'
 
