@@ -1,0 +1,27 @@
+name: Build and Publish NuGet Package
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          
+      - name: Restore NuGet packages
+        run: dotnet restore ./Gh.Actions.Poc/Gh.Actions.Poc.sln
+      - name: Build and pack NuGet package
+        run: |
+          dotnet build ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release 
+          dotnet pack ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release --output ./nupkg /p:PackageVersion=${{ env.CURRENT_NUGET_VERSION }} /p:Version=${{ env.CURRENT_NUGET_VERSION }} /p:NuGetVersion=${{ env.CURRENT_NUGET_VERSION }}
+
+      - name: Publish NuGet package
+        run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+
