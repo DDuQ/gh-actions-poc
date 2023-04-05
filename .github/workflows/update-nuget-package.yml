@@ -19,7 +19,9 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --output ../
       - name: Pack NuGet package
-        run: dotnet pack --configuration Release --output ./nupkg/ -v:d
+        run: dotnet pack --configuration Release --output ./nupkg/
+      - name: Print NuGet package path
+        run: echo "NuGet package path:$(pwd)/nupkg/"
       - name: Push NuGet package
         uses: nuget/push@v1
         with:
