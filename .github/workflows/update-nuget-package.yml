@@ -1,27 +1,26 @@
-name: Build and Publish NuGet Package
+name: Publish Packages
 
 on:
   push:
-    branches:
-      - main
-      
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          
-      - name: Restore NuGet packages
-        run: dotnet restore ./Gh.Actions.Poc/Gh.Actions.Poc.sln
-      - name: Build and pack NuGet package
-        run: |
-          dotnet build ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release 
-          dotnet pack ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc.csproj --configuration Release --output ./nupkg /p:PackageVersion=${{ env.CURRENT_NUGET_VERSION }} /p:Version=${{ env.CURRENT_NUGET_VERSION }}
+    branches: [ main ]
 
-      - name: Publish NuGet package
-        run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Install dependencies
+      run: dotnet restore ./Gh.Actions.Poc/Gh.Actions.Poc.sln
+    - name: Build
+      run: dotnet build ./Gh.Actions.Poc/Gh.Actions.Poc.sln --configuration Release --no-restore
+    - name: Publish Gh.Actions.Poc
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+          PROJECT_FILE_PATH: ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
 
