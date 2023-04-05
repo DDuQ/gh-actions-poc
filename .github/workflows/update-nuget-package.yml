@@ -4,26 +4,25 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup .NET
+      - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
+      - name: Restore NuGet packages
+        run: dotnet restore
       - name: Build
-        run: dotnet build -c Release
-      - name: Test
-        run: dotnet test
-      - name: Pack
-        run: dotnet pack -c Release
-        working-directory: ./MyProject
-      - name: NuGet Push
+        run: dotnet build --configuration Release
+      - name: Push NuGet package
         uses: nuget/push@v1
         with:
-          nuget-api-key: ${{secrets.NUGET_API_KEY}}
-          nuget-source: 'https://api.nuget.org/v3/index.json'
-          path: './MyProject/bin/Release/*.nupkg'
+          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+          nuget-version: ${{ env.NUGET_VERSION }}
+          nuget-package: './Gh.Actions.Poc/bin/Release/Gh.Actions.Poc.${{ env.CURRENT_NUGET_VERSION }}.nupkg'
+          nuget-destination: 'https://www.nuget.org/api/v2/package'
+
