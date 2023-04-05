@@ -19,7 +19,7 @@ jobs:
     - name: Build
       run: dotnet build ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc.csproj --configuration Release --no-restore
     - name: Publish Gh.Actions.Poc
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: brandedoutcast/publish-nuget@v2.4.0
       with:
           PROJECT_FILE_PATH: ./Gh.Actions.Poc/Gh.Actions.Poc/Gh.Actions.Poc.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}} 
