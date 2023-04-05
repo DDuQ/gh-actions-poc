@@ -14,21 +14,14 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
+          
       - name: Restore NuGet packages
         run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --output ../
-      - name: Pack NuGet package
-        run: dotnet pack --configuration Release --output ./nupkg/ --verbosity detailed
-      - name: List files in nupkg folder
-        run: ls ./nupkg/
-      - name: Print NuGet package path
-        run: echo "NuGet package path:$(pwd)/nupkg/"
-      - name: Push NuGet package
-        uses: nuget/push@v1
-        with:
-          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
-          nuget-version: 1.0.0
-          nuget-package: './nupkg/Gh.Actions.Poc.1.0.0.nupkg'
-          nuget-destination: 'https://www.nuget.org/api/v2/package'
+      - name: Build and pack NuGet package
+        run: |
+          dotnet build --configuration Release
+          dotnet pack --configuration Release --output ./nupkg
+
+      - name: Publish NuGet package
+        run: dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
 
