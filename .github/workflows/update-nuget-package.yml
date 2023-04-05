@@ -19,7 +19,9 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --output ../
       - name: Pack NuGet package
-        run: dotnet pack --configuration Release --output ./nupkg/
+        run: dotnet pack --configuration Release --output ./nupkg/ --verbosity detailed
+      - name: List files in nupkg folder
+        run: ls ./nupkg/
       - name: Print NuGet package path
         run: echo "NuGet package path:$(pwd)/nupkg/"
       - name: Push NuGet package
